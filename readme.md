@@ -1,1 +1,0 @@
-Scan and Pay

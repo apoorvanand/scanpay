@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Front End</title>
+		<meta name = 'viewport' content="width = device-width, initial-scale = 1">
+		<link rel="shortcut icon" type="image/png" href="favicon.jpg"/>
+		<script src="js/main.js"></script>
+    
+		<meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="js/alignpat.js"></script>
+    <script src="js/bitmat.js"></script>
+    <script src="js/bmparser.js"></script>
+    <script src="js/datablock.js"></script>
+    <script src="js/databr.js"></script>
+    <script src="js/datamask.js"></script>
+    <script src="js/detector.js"></script>
+    <script src="js/errorlevel.js"></script>
+    <script src="js/formatinf.js"></script>
+    <script src="js/gf256poly.js"></script>
+    <script src="js/gf256.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/qrcode.js"></script>
+    <script src="js/rsdecoder.js"></script>
+    <script src="js/decoder.js"></script>
+    <script src="js/findpat.js"></script>
+    <script src="js/version.js"></script>
+    
+	</head>
+	
+	<body>
+	<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">SCAN & Pay</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="{% url 'music:index' %}"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp; Check Status</a></li>
+                <li class=""><a href="#"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>&nbsp; Check Balance</a></li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'music:create_album' %}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'music:logout_user' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="video">
+    <video autoplay="true" id="videoElement" class = "cent">
+     
+    </video>
+</div>
+<canvas style="display:none;"></canvas>
+<script>
+  
+  const img = document.querySelector('#testimage');
+  const canvas = document.createElement('canvas');
+ const video = document.querySelector("#videoElement");
+  
+  
+  
+  function screenCapture() {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  // Other browsers will fall back to image/png
+  img.src = canvas.toDataURL('image/webp');
+}
+ 
+if (navigator.mediaDevices.getUserMedia) {       
+    navigator.mediaDevices.getUserMedia({video: true})
+  .then(function(stream) {
+    video.srcObject = stream;
+  })
+  .catch(function(err0r) {
+    console.log("Something went wrong!");
+  });
+}
+ var scrnsht, decodedData, myVar; 
+  
+myVar = setInterval(function() {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  // Other browsers will fall back to image/png
+  scrnsht = canvas.toDataURL('image/webp');
+  console.log(scrnsht);
+    qrcode.callback = read;
+                // Start decoding
+  qrcode.decode(scrnsht);
+}, 500);
+  
+  
+  
+function read(a){
+  if(a != "error decoding QR Code"){if (window.confirm('If you click "ok" you would be redirected . Cancel will load this website ')) 
+{
+window.location.href=a;
+};
+  } 
+  }  
+  
+  
+</script>
+    <button class = "btn-success btn1" id = "sendbutton"><a href = "https://eos-pay.glitch.me/">Back</a></button>
+</body>
+</html>
